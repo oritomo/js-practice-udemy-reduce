@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reduceの練習</title>
+</head>
+
+<body>
+  <script>
+
+
+    'use strict';
+    {
+      //reduceは配列の中にある複数の値をなにか１つのものに集約するイメージ
+      const numbers = [
+        10,
+        20,
+        30,
+      ];
+      //let sum = 0;
+
+      //１回目sum(0) + number(10)が行われて２回目のsumに10が
+      //２回目sum(10) + number(20)が行われて３回目のsumに30が
+      //３回目sum(30) + number(30)が行われてループが終わり60となる
+      const result = numbers.reduce(function (sum, number) {
+        return sum += number;
+      }, 0); //１回目のsumに入るのがこの初期値の0
+      console.log(result); //60
+
+
+      const colors = [
+        { name: 'red' },
+        { name: 'blue' },
+        { name: 'green' },
+      ];
+      //----------------------1----------------------
+      //１と２で内容は同じ
+
+      let box = [];
+      colors.map(color => {
+        return box.push(color.name);
+      });
+      console.log(box); //["red", "blue", "green"]
+
+      //----------------------2----------------------
+
+      const box2 = colors.reduce((prev, color) => {
+        prev.push(color.name);
+        return prev;
+      }, []);
+      console.log(box2); //["red", "blue", "green"]
+
+      //-----------------------------------------------
+      //()の数の均衡がとれているか判定する関数
+      const balancedParans = function (string) {
+        return !string.split('').reduce((prev, char) => {
+          if (prev < 0) { return prev; } //)から始まるとfalseになり以下の処理はされない
+          if (char === '(') { return prev + 1; }
+          if (char === ')') { return prev - 1; }
+        }, 0);
+      }
+      console.log(balancedParans(')((())'));
+
+
+      var trips = [{ distance: 34 }, { distance: 12 }, { distance: 1 }];
+
+      var totalDistance = trips.reduce((acc, trip) => {
+        return acc += trip.distance;
+      }, 0);
+      console.log(totalDistance);
+
+
+      var desks = [
+        { type: 'sitting' },
+        { type: 'standing' },
+        { type: 'sitting' },
+        { type: 'sitting' },
+        { type: 'standing' }
+      ];
+
+      var deskTypes = desks.reduce(function (acc, desk) {
+        if (desk.type === 'sitting') { acc.sitting++; }
+        if (desk.type === 'standing') { acc.standing++; }
+        return acc;
+      }, { sitting: 0, standing: 0 });
+      console.log(deskTypes);
+
+
+      const nums = [1, 1, 2, 2, 3, 4, 5, 5, 5, 6];
+      function unique(array) {
+        return array.reduce(function (acc, num) {
+          let existingElement = acc.find(target => {
+            //console.log(target)
+            //console.log(num)
+            return target === num;  //ヒットした最初の要素のみ返している?じゃなくてダブってるものが入ってる
+          });
+          if (!existingElement) {
+            acc.push(num); //すでに配列に入ってないものだけプッシュしてる。　//1,2,3,4,5,6をpush
+          }
+          console.log(!existingElement)
+          return acc;
+        }, []);
+      }
+      console.log(unique(nums));
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>
